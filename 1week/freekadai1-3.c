@@ -11,9 +11,30 @@ int main() {
 	int height = readHeader(fileName, IMAGE_HEIGHT);
 	int bpp = readHeader(fileName, IMAGE_BPP);
 
-	BYTE *copyData = (BYTE*)malloc(imageByte);
+	int max = 0, w = 0, h = 0;
 	int x, y;
-	double rFactor = 1.1, gFactor = 1.1, bFactor = 1.1;
+	for (x = 0; x < width; x++) {
+		for (y = 0; y < height; y++) {
+			if (data[3 * (x + y * width)] + data[3 * (x + y * width) + 1] 
+				+ data[3 * (x + y * width) + 2] > max) {
+				max = data[3 * (x + y * width)] + data[3 * (x + y * width) + 1] 
+					+ data[3 * (x + y * width) + 2];
+				w = x;
+				h = y;
+			}
+		}
+	}
+
+	double average = ((int)data[3 * (w + h * width)] + (int)data[3 * (w + h * width) + 1] 
+			+ (int)data[3 * (w + h * width) + 2]) / 3;
+
+	BYTE *copyData = (BYTE*)malloc(imageByte);
+	double rFactor = average / (double)data[3 * (w + h * width)];
+	double gFactor = average / (double)data[3 * (w + h * width) + 1];
+	double bFactor = average / (double)data[3 * (w + h * width) + 2];
+
+	printf("%f %f %f %f\n", rFactor, gFactor, bFactor, (double)data[3 * (w + h * width)]);
+
 	for (x = 0; x < width; x++) {
 		for (y = 0; y < height; y++) {
 			if (rFactor * copyData[3 * (x + y * width)] > 255) copyData[3 * (x + y * width)] = 255;
