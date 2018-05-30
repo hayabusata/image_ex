@@ -1,10 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "jpegio.h"
 
 int main() {
-	char *fileName = "testImage.jpg";
+	char *fileName = "kuromaki.jpg";
 	BYTE *data = NULL;
 	int imageByte = readJpeg(fileName, &data);
 	int width = readHeader(fileName, IMAGE_WIDTH);
@@ -47,7 +47,7 @@ int main() {
 		}
 	}
 
-	if (writeJpeg("free1-3result.jpg", copyData, width, height, bpp, 100) == 1) {
+	if (writeJpeg("whiteKuromaki.jpg", copyData, width, height, bpp, 100) == 1) {
 		printf("success\n");
 	} else {
 		printf("not success\n");

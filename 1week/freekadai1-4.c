@@ -16,7 +16,7 @@ int main() {
 	char *fileName = "testImage.jpg";
 	_Image inputFile;
 	inputFile->data = NULL;
-	inputFile.imageByte = readJpeg(fileName, inputFile.data);
+	inputFile.imageByte = readJpeg(fileName, &inputFile.data);
 	inputFile.width = readHeader(fileName, IMAGE_WIDTH);
 	inputFile.height = readHeader(fileName, IMAGE_HEIGHT);
 	inputFile.bpp = readHeader(fileName, IMAGE_BPP);
